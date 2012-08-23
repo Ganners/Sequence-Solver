@@ -18,9 +18,60 @@ class Nth_Term {
     }
 
     /**
-     * a+(n-1)d
-     */
+     *  Get the nth term using a difference table
+     */ 
     public function getNextTerm() {
+
+        $last = array();
+
+        $diff = array_slice($this->sequence, 0);
+
+        $n = count($this->sequence) - 1;
+
+        for($k = 0; $k < $n; $k++) {
+
+            $same = 1;
+
+            for($j = 0; $j < count($diff) - $k - 1; $j++) {
+                
+                $diff[$j] = $diff[$j+1] - $diff[$j];
+
+                if($j > 0 && $diff[$j] != $diff[$j-1])
+                    $same = 0;
+
+            }
+
+            array_push($last, $diff[$j]);
+
+            if($same) {
+
+                if($k < count($this->sequence) - 2) {
+
+                    $out = $diff[0];
+
+                    for($s = count($last)-1; $s > -1; $s--) {
+
+                        $out += $last[$s];
+
+                    }
+
+                    return $out;
+                }
+                else
+                    return FALSE;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Get the nth term using the formula a+(n-1)d
+     */
+    public function getNextTermArithmetic() {
 
         $a = $this->sequence[0];
 

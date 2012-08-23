@@ -47,6 +47,9 @@ class Math_Nth_TermTest extends PHPUnit_Framework_TestCase {
         $nth_term = new Nth_Term("1, 2, 3, 4");
         $this->assertEquals(5, $nth_term->getNextTerm());
 
+        $nth_term = new Nth_Term("10, 9, 8, 7");
+        $this->assertEquals(6, $nth_term->getNextTerm());
+
         $nth_term = new Nth_Term("2, 4, 6, 8");
         $this->assertEquals(10, $nth_term->getNextTerm());
 
@@ -59,8 +62,8 @@ class Math_Nth_TermTest extends PHPUnit_Framework_TestCase {
         $nth_term = new Nth_Term("101, 202, 303, 404");
         $this->assertEquals(505, $nth_term->getNextTerm());
 
-        $nth_term = new Nth_Term("4, 8, 16, 32");
-        $this->assertEquals(505, $nth_term->getNextTerm());
+        $nth_term = new Nth_Term("1, 8, 27, 64, 125");
+        $this->assertEquals(216, $nth_term->getNextTerm());
 
     }
 
