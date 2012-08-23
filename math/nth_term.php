@@ -1,6 +1,26 @@
 <?php
 
-namespace math;
+/**
+ * Allows the calculation of the Nth term from a sequence, and can return
+ * the formula used. Offers two solutions, first being a difference table
+ * and the second an arithmetic forumla.
+ *
+ * PHP version 5.3
+ *
+ * LICENSE: This source file is subject to version 3.01 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @package    Math
+ * @author     Mark Gannaway <mark@ganners.co.uk>
+ * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @version    1
+ * @link       http://
+ */
+
+namespace Math;
 
 class Nth_Term {
 
@@ -19,7 +39,9 @@ class Nth_Term {
     }
 
     /**
-     *  Get the nth term using a difference table
+     * Get the nth term using a difference table
+     * @return [int]
+     * @throws ErrorException if term could not be found
      */ 
     public function getNextTerm() {
 
@@ -64,20 +86,21 @@ class Nth_Term {
 
                         $formula .= "{$last[$s]}";
                         $formula .= $s > 0 ? " + " : "";
-                        
+
                         $out += $last[$s];
 
                     }
 
                     $formula .= " = {$out}";
 
+                    //Set the formula
                     $this->formula = $formula;
 
-                    return $out;
+                    return (int) $out;
 
                 }
                 else
-                    return FALSE;
+                    throw new ErrorException("Next term could not be found, not a valid sequence.", 500);
 
                 break;
 
@@ -89,6 +112,8 @@ class Nth_Term {
 
     /**
      * Get the nth term using the formula a+(n-1)d
+     * @return [int]
+     * @throws ErrorException if terms are not arithmetic
      */
     public function getNextTermArithmetic() {
 
@@ -114,13 +139,20 @@ class Nth_Term {
 
         }
 
+        //Write out the formula used
         $this->formula = "{$a} + ({$n}) * {$d}";
-        return $a + ($n) * $d;
+        return (int) $a + ($n) * $d;
 
     }
     
     /**
+     * Sets the sequence by type, checks and validates
+     * @param [array|string] $vars - The input vars to the sequence
+     * @return [bool]
      * 
+     * @throws ErrorException if array has less than 1 number
+     * @throws ErrorException if sequence has less than 1 number
+     * @throws ErrorException if type is wrong
      */
     public function setSequence($vars) {
 
@@ -148,36 +180,43 @@ class Nth_Term {
 
         }
 
+        return TRUE;
+
     }
 
     /**
-     * 
+     * Returns a formula if it is set, or false
+     * @return [string|bool]
      */
     public function getFormula() {
 
         if($this->formula)
-            return $this->formula;
+            return (string) $this->formula;
         else
             return FALSE;
 
     }
 
     /**
-     * 
+     * Gets the sequence that has been set
+     * @return [array]
      */
     public function getSequence() {
 
         if(isset($this->sequence) && count($this->sequence) > 0)
-            return $this->sequence;
+            return (array) $this->sequence;
         else
             return (array) NULL;
 
     }
 
     /**
-     * 
+     * Checks if all values in array are numeric
+     * @param [array] $array
+     * @return [bool]
+     * @throws ErrorException if invalid
      */
-    public function validateNumericArray($array) {
+    public function validateNumericArray(array $array) {
 
         foreach($array as $key => $value)
             if(!is_numeric($value))
@@ -187,7 +226,7 @@ class Nth_Term {
     }
 
     /**
-     * 
+     * Sets all values in a sequence to type int
      */
     protected function convertSequenceTypesToInt() {
 
