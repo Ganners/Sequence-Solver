@@ -47,6 +47,9 @@ class Math_Nth_TermTest extends PHPUnit_Framework_TestCase {
         $nth_term = new Nth_Term("1, 2, 3, 4");
         $this->assertEquals(5, $nth_term->getNextTerm());
 
+        $nth_term = new Nth_Term("1, 2, 3, 4");
+        $this->assertEquals(6, $nth_term->getNextTerm(6));
+
         $nth_term = new Nth_Term("10, 9, 8, 7");
         $this->assertEquals(6, $nth_term->getNextTerm());
 

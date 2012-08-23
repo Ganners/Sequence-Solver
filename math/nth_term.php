@@ -21,13 +21,13 @@ class Nth_Term {
     /**
      *  Get the nth term using a difference table
      */ 
-    public function getNextTerm($n = 0) {
+    public function getNextTerm() {
 
         $last = array();
 
         $diff = array_slice($this->sequence, 0);
 
-        $n = $n == 0 ? count($this->sequence) - 1 : $n;
+        $n = count($this->sequence);
 
         $formula = "";
 
@@ -54,7 +54,7 @@ class Nth_Term {
 
                 $formula .= "\n----\n\n";
 
-                if($k < count($this->sequence) - 2) {
+                if($k < ($n + 1) - 2) {
 
                     $out = $diff[0];
 
@@ -64,6 +64,7 @@ class Nth_Term {
 
                         $formula .= "{$last[$s]}";
                         $formula .= $s > 0 ? " + " : "";
+                        
                         $out += $last[$s];
 
                     }
