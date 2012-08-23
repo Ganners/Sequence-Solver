@@ -7,15 +7,9 @@
  *
  * PHP version 5.3
  *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
  * @package    Math
  * @author     Mark Gannaway <mark@ganners.co.uk>
- * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
  * @version    1
  * @link       http://
  */
