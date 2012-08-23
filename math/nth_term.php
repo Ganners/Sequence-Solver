@@ -5,6 +5,7 @@ namespace math;
 class Nth_Term {
 
     public $sequence = array();
+    public $formula = "";
 
    /**
     * Sets up the sequence dependency for the object
@@ -20,13 +21,15 @@ class Nth_Term {
     /**
      *  Get the nth term using a difference table
      */ 
-    public function getNextTerm() {
+    public function getNextTerm($n = 0) {
 
         $last = array();
 
         $diff = array_slice($this->sequence, 0);
 
-        $n = count($this->sequence) - 1;
+        $n = $n == 0 ? count($this->sequence) - 1 : $n;
+
+        $formula = "";
 
         for($k = 0; $k < $n; $k++) {
 
@@ -36,26 +39,41 @@ class Nth_Term {
                 
                 $diff[$j] = $diff[$j+1] - $diff[$j];
 
+                $formula .= "{$diff[$j]} ";
+
                 if($j > 0 && $diff[$j] != $diff[$j-1])
                     $same = 0;
 
             }
 
+            $formula .= "\n";
+
             array_push($last, $diff[$j]);
 
             if($same) {
+
+                $formula .= "\n----\n\n";
 
                 if($k < count($this->sequence) - 2) {
 
                     $out = $diff[0];
 
+                    $formula .= "{$out} + ";
+
                     for($s = count($last)-1; $s > -1; $s--) {
 
+                        $formula .= "{$last[$s]}";
+                        $formula .= $s > 0 ? " + " : "";
                         $out += $last[$s];
 
                     }
 
+                    $formula .= " = {$out}";
+
+                    $this->formula = $formula;
+
                     return $out;
+
                 }
                 else
                     return FALSE;
@@ -95,6 +113,7 @@ class Nth_Term {
 
         }
 
+        $this->formula = "{$a} + ({$n}) * {$d}";
         return $a + ($n) * $d;
 
     }
@@ -127,6 +146,18 @@ class Nth_Term {
             break;
 
         }
+
+    }
+
+    /**
+     * 
+     */
+    public function getFormula() {
+
+        if($this->formula)
+            return $this->formula;
+        else
+            return FALSE;
 
     }
 
