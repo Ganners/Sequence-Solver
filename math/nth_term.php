@@ -144,7 +144,33 @@ class Nth_Term {
         return (int) $a + ($n) * $d;
 
     }
-    
+
+    /**
+     * Returns a formula if it is set, or false
+     * @return [string|bool]
+     */
+    public function getFormula() {
+
+        if($this->formula)
+            return (string) $this->formula;
+        else
+            return FALSE;
+
+    }
+
+    /**
+     * Gets the sequence that has been set
+     * @return [array]
+     */
+    public function getSequence() {
+
+        if(isset($this->sequence) && count($this->sequence) > 0)
+            return (array) $this->sequence;
+        else
+            return (array) NULL;
+
+    }
+
     /**
      * Sets the sequence by type, checks and validates
      * @param [array|string] $vars - The input vars to the sequence
@@ -154,7 +180,7 @@ class Nth_Term {
      * @throws ErrorException if sequence has less than 1 number
      * @throws ErrorException if type is wrong
      */
-    public function setSequence($vars) {
+    protected function setSequence($vars) {
 
         switch(gettype($vars)) {
 
@@ -185,38 +211,12 @@ class Nth_Term {
     }
 
     /**
-     * Returns a formula if it is set, or false
-     * @return [string|bool]
-     */
-    public function getFormula() {
-
-        if($this->formula)
-            return (string) $this->formula;
-        else
-            return FALSE;
-
-    }
-
-    /**
-     * Gets the sequence that has been set
-     * @return [array]
-     */
-    public function getSequence() {
-
-        if(isset($this->sequence) && count($this->sequence) > 0)
-            return (array) $this->sequence;
-        else
-            return (array) NULL;
-
-    }
-
-    /**
      * Checks if all values in array are numeric
      * @param [array] $array
      * @return [bool]
      * @throws ErrorException if invalid
      */
-    public function validateNumericArray(array $array) {
+    protected function validateNumericArray(array $array) {
 
         foreach($array as $key => $value)
             if(!is_numeric($value))
