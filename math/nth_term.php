@@ -13,15 +13,44 @@ class Nth_Term {
     public function __construct($vars) {
 
         $this->setSequence($vars);
+        $this->convertSequenceTypesToInt();
 
     }
-    
 
+    /**
+     * a+(n-1)d
+     */
     public function getNextTerm() {
 
+        $a = $this->sequence[0];
+
+        $n = count($this->sequence);
+
+        $d = 0;
+
+        foreach($this->sequence as $key => $term) {
+
+            if(!isset($this->sequence[($key + 1)]))
+                break;
+
+            $difference = $this->sequence[($key + 1)] - $this->sequence[$key];
+
+            if($d == 0)
+                $d = $difference;
+            else if ($d != $difference)
+                throw new ErrorException("Terms are not arithmetic, sequence could not be generated");
+            else if ($d == $difference)
+                continue;
+
+        }
+
+        return $a + ($n) * $d;
+
     }
     
-    
+    /**
+     * 
+     */
     public function setSequence($vars) {
 
         switch(gettype($vars)) {
@@ -35,9 +64,9 @@ class Nth_Term {
             break;
 
             case 'string':
-                preg_match_all("/([0-9]*)/", $vars, $sequence);
-                if(count($sequence) > 0)
-                    $this->sequence = $sequence;
+                preg_match_all("/(?P<matches>[0-9]+)/", $vars, $sequence);
+                if(count($sequence['matches']) > 0)
+                    $this->sequence = $sequence['matches'];
                 else
                     throw new ErrorException("Sequence must have more than 1 number");
             break;
@@ -50,6 +79,9 @@ class Nth_Term {
 
     }
 
+    /**
+     * 
+     */
     public function getSequence() {
 
         if(isset($this->sequence) && count($this->sequence) > 0)
@@ -59,11 +91,29 @@ class Nth_Term {
 
     }
 
-    protected function validateNumericArray($array) {
+    /**
+     * 
+     */
+    public function validateNumericArray($array) {
 
         foreach($array as $key => $value)
             if(!is_numeric($value))
                 throw new ErrorException("Array must only contain numerical values");
+
+        return TRUE;
+    }
+
+    /**
+     * 
+     */
+    protected function convertSequenceTypesToInt() {
+
+        if($this->sequence) {
+
+            foreach($this->sequence as &$sequence)
+                $sequence = (int) $sequence;
+
+        }
 
     }
 
