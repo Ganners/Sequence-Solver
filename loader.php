@@ -2,6 +2,8 @@
 
 function __sequenceAutoload($classname) {
 
+	$classname = strtolower($classname);
+
 	$filename = str_replace("\\", DIRECTORY_SEPARATOR, 
 		dirname(__FILE__) . DIRECTORY_SEPARATOR . "{$classname}.php");
 
