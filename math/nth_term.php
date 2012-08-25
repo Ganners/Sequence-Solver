@@ -45,7 +45,8 @@ class Nth_Term {
 
         $n = count($this->sequence);
 
-        $formula = "";
+        $formula = implode(" ", $this->sequence);
+        $formula .= "\n";
 
         for($k = 0; $k < $n; $k++) {
 
